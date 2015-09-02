@@ -1,0 +1,9 @@
+options:
+  port:
+    type: int
+    default: 80
+    description: The port to use for serving nginx content.
+  webroot:
+    type: string
+    default: /srv/docker-nginx
+    description: Path that contains your HTML content to serve.

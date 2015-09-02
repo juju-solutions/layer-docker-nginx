@@ -1,0 +1,12 @@
+name: docker-nginx
+summary: Deliver NGINX in an application container
+description: Deliver NGINX in an application container to serve static content.
+maintainers:
+    - Charles Butler <charles.butler@canonical.com>
+    - Matt Bruzek <matthew.bruzek@canonical.com>
+tags:
+    - application
+    - docker
+provides:
+  website:
+    interface: http
