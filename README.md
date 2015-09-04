@@ -21,7 +21,18 @@ This will create a `trusty/docker-nginx` charm in your `$CHARM_REPOSITORY`
 ready to deploy to your environment like so:
 
     juju deploy local:trusty/docker-nginx
+    juju expose docker-nginx
 
+Once the docker-nginx service has completed setup, and the service is exposed
+it is reachable via the public-ip of the service http://docker-nginx-public-ip
+
+To deploy a static HTML site out of VCS (BZR and Git are currently supported)
+set the repository path on the charm to a public clone url of your project:
+
+    juju set docker-nginx repository="https://github.com/chuckbutler/Skeleton.git"
+
+Refresh the page and you will be greeted with your freshly deployed HTML site,
+served from an NGinx process running in an application container.
 
 ### Hacking
 
@@ -54,7 +65,7 @@ balancer like [HAProxy](https://jujucharms.com/trusty/haproxy/)
 there is no gaurantee that your method will run before the requisit cleanup
 action has been run.
 
-**nginx.start** - Emitted when the docker image for `nginx:latest` has been
+**nginx.available** - Emitted when the docker image for `nginx:latest` has been
 pulled, and the webserver is ready to launch.
 
 **nginx.stop** - Emitted to halt the container, and remove the running app-container
