@@ -7,3 +7,7 @@ options:
     type: string
     default: /srv/docker-nginx
     description: Path that contains your HTML content to serve.
+  repository:
+    type: string
+    default:
+    description: VCS url to clone to webroot, and be served by nginx-docker
