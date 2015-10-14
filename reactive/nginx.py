@@ -52,7 +52,7 @@ def run_container(webroot=None):
     and provide feedback/notifications to the end user.
     '''
     if not webroot:
-        webroot = config['webroot']
+        webroot = config.get('webroot')
     # Run the nginx docker container.
     run_command = [
         'docker',
@@ -64,12 +64,12 @@ def run_container(webroot=None):
         '-v',
         '{}:/usr/share/nginx/html:ro'.format(webroot),
         '-p',
-        '{}:80'.format(config['port']),
+        '{}:80'.format(config.get('port')),
         '-d',
         'nginx'
     ]
     check_call(run_command)
-    hookenv.open_port(config['port'])
+    hookenv.open_port(config.get('port'))
     reactive.remove_state('nginx.stopped')
     reactive.set_state('nginx.started')
     hookenv.status_set('active', 'Nginx container started')
@@ -106,7 +106,7 @@ def configure_website_port(http):
     an ip address (default to private-address) and set the port for the
     relationship data
     '''
-    serve_port = config['port']
+    serve_port = config.get('port')
     http.configure(port=serve_port)
     hookenv.status_set('active', '')
 
@@ -134,13 +134,13 @@ def clone_repository(branch='master'):
     '''
     repo_dir = None
 
-    if config['repository']:
+    if config.get('repository'):
         hookenv.status_set('maintenance', 'Cloning repository')
 
         if not config.changed('repository'):
             repo_dir = db.get('repo_dir')
 
-        repo_dir = install_remote(config['repository'], dest=config['webroot'],
+        repo_dir = install_remote(config.get('repository'), dest=config.get('webroot'),
                                   branch=branch, depth=None)
         db.set('repo_dir', repo_dir)
         stop_container()
